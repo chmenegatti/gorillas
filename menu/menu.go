@@ -1,4 +1,4 @@
-package main
+package menu
 
 import (
 	"bytes"
@@ -62,10 +62,12 @@ func (m *Menu) Draw(screen *ebiten.Image, width int) {
 	op := &text.DrawOptions{}
 	op.GeoM.Translate(float64(menuX), 100)
 	op.ColorScale.ScaleWithColor(color.White)
-	text.Draw(screen, menuTitle, &text.GoTextFace{
-		Size:   48,
-		Source: pixelFontRegularSource,
-	}, op)
+	text.Draw(
+		screen, menuTitle, &text.GoTextFace{
+			Size:   48,
+			Source: pixelFontRegularSource,
+		}, op,
+	)
 
 	textStartX := int(menuX)
 	for i, option := range m.options {
@@ -76,9 +78,11 @@ func (m *Menu) Draw(screen *ebiten.Image, width int) {
 		}
 		op := &text.DrawOptions{}
 		op.GeoM.Translate(float64(textStartX), float64(y))
-		text.Draw(screen, optionText, &text.GoTextFace{
-			Size:   32,
-			Source: pixelFontRegularSource,
-		}, op)
+		text.Draw(
+			screen, optionText, &text.GoTextFace{
+				Size:   32,
+				Source: pixelFontRegularSource,
+			}, op,
+		)
 	}
 }
