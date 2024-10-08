@@ -69,7 +69,6 @@ func (bg *BuildingGenerator) GenerateBuildings() []*ebiten.Image {
 }
 
 func (bg *BuildingGenerator) drawWindows(building *ebiten.Image, buildingWidth, buildingHeight int) {
-
 	windowColor := color.RGBA{200, 255, 255, 100}
 	windowWidth := buildingWidth / 5
 	windowHeight := 20 // Tamanho fixo para as janelas
@@ -83,11 +82,23 @@ func (bg *BuildingGenerator) drawWindows(building *ebiten.Image, buildingWidth, 
 	// Offset inicial de 13% a partir da parte inferior do prédio
 	startY := int(0.87 * float64(buildingHeight))
 
-	// Desenha as janelas, começando de baixo para cima
+	// Calcula o offset de 5% do topo do prédio para desenhar a última linha de janelas
+	topOffset := int(0.05 * float64(buildingHeight))
+
+	// Desenha as janelas, começando de baixo para cima, e adiciona uma linha extra no topo
 	for y := startY; y > windowHeight*2; y -= windowHeight * 2 {
 		for col := 0; col < 3; col++ {
 			x := offset + col*columnWidth + (columnWidth-windowWidth)/2
 			windowRect := image.Rect(x, y, x+windowWidth, y+windowHeight)
+			building.SubImage(windowRect).(*ebiten.Image).Fill(windowColor)
+		}
+	}
+
+	// Desenha a linha adicional de janelas no topo, respeitando o offset de 5%
+	if startY > topOffset+windowHeight*2 {
+		for col := 0; col < 3; col++ {
+			x := offset + col*columnWidth + (columnWidth-windowWidth)/2
+			windowRect := image.Rect(x, topOffset, x+windowWidth, topOffset+windowHeight)
 			building.SubImage(windowRect).(*ebiten.Image).Fill(windowColor)
 		}
 	}
