@@ -1,0 +1,6 @@
+go 1.23.0
+
+use (
+	.
+	../../../.asdf/installs/golang/1.23.0/packages/pkg/mod/github.com/hajimehoshi/ebiten@v1.12.12
+)

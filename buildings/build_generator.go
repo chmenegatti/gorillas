@@ -1,4 +1,4 @@
-package main
+package buildings
 
 import (
 	"image"
@@ -23,10 +23,11 @@ func NewBuildingGenerator(windowWidth, windowHeight int) *BuildingGenerator {
 	}
 }
 
-func (bg *BuildingGenerator) GenerateBuildings() []*ebiten.Image {
+func (bg *BuildingGenerator) GenerateBuildings() ([]*ebiten.Image, []int) {
 	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
 	buildings := make([]*ebiten.Image, bg.buildingCount)
 	buildingWidth := bg.windowWidth / bg.buildingCount
+	buildingHeights := make([]int, bg.buildingCount)
 
 	// Define alturas fixas
 	minHeight := int(0.3*float64(bg.windowHeight)/10) * 10 // Mínimo de 30%
@@ -68,7 +69,7 @@ func (bg *BuildingGenerator) GenerateBuildings() []*ebiten.Image {
 		buildings[i] = building
 	}
 
-	return buildings
+	return buildings, buildingHeights
 }
 
 func (bg *BuildingGenerator) drawWindows(building *ebiten.Image, buildingWidth, buildingHeight int) {
